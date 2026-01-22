@@ -1,9 +1,0 @@
-{
-  "codeName" : "Default",
-  "dynaModelFilePath" : "PSMODULES/base/PSDATAENTITIES/res_groups/PSDEDATARELATIONS/Default.json",
-  "getFormCapPSLanguageRes" : {
-    "lanResTag" : "DE.LNAME.RES_GROUPS"
-  },
-  "formCaption" : "权限组",
-  "name" : "权限组默认关系界面组"
-}
