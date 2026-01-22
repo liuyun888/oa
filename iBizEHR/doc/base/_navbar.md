@@ -1,3 +1,0 @@
-- EHR底座
-- [假勤管理](/attendance/index.html)
-- [招聘管理](/recruit/index.html)
