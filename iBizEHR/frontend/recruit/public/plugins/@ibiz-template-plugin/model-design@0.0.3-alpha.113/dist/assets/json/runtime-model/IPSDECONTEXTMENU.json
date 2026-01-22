@@ -1,9 +1,0 @@
-{
-    "getPSDEContextMenuItems()" : {
-        "description": "获取上下文菜单项集合",
-        "params": {
-        },
-        "return": "",
-        "returnDescription": "上下文菜单项集合"
-    }
-}

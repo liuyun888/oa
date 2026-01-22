@@ -1,9 +1,0 @@
-{
-    "getCodeList()" : {
-        "description": "获取代码表",
-        "params": {
-        },
-        "return": "net.ibizsys.paas.codelist.ICodeList",
-        "returnDescription": "代码表"
-    }
-}

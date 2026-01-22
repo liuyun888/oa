@@ -1,9 +1,0 @@
-{
-    "getConnection()" : {
-        "description": "获取当前连接",
-        "params": {
-        },
-        "return": "java.sql.Connection",
-        "returnDescription": "当前连接"
-    }
-}

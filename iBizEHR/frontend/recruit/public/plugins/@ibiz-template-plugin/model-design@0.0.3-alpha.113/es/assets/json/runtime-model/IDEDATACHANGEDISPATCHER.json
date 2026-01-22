@@ -1,9 +1,0 @@
-{
-    "getName()" : {
-        "description": "获取引擎的名称",
-        "params": {
-        },
-        "return": "java.lang.String",
-        "returnDescription": "引擎的名称"
-    }
-}

@@ -1,9 +1,0 @@
-{
-    "getNodeValue()" : {
-        "description": "获取节点值",
-        "params": {
-        },
-        "return": "java.lang.String",
-        "returnDescription": "节点值"
-    }
-}

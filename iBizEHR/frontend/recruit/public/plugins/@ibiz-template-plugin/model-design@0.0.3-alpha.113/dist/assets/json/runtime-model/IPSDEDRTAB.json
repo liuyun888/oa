@@ -1,9 +1,0 @@
-{
-    "getPSDEDRTabPages()" : {
-        "description": "获取界面关系项集合",
-        "params": {
-        },
-        "return": "",
-        "returnDescription": "界面关系项集合"
-    }
-}

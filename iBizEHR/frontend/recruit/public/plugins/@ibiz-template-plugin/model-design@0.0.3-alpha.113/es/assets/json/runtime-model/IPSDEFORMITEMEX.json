@@ -1,9 +1,0 @@
-{
-    "getPSDEFormItems()" : {
-        "description": "获取表单项成员集合",
-        "params": {
-        },
-        "return": "",
-        "returnDescription": "表单项成员集合"
-    }
-}

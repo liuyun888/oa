@@ -1,9 +1,0 @@
-{
-    "getServicePath()" : {
-        "description": "获取服务路径",
-        "params": {
-        },
-        "return": "java.lang.String",
-        "returnDescription": "服务路径"
-    }
-}

@@ -1,9 +1,0 @@
-{
-    "getPSPFPubCode()" : {
-        "description": "获取前端应用发布代码类型",
-        "params": {
-        },
-        "return": "net.ibizsys.model.pf.IPSPFPubCode",
-        "returnDescription": "前端应用发布代码类型"
-    }
-}

@@ -1,9 +1,0 @@
-{
-    "getPSSysCalendarId()" : {
-        "description": "获取系统日历部件标识",
-        "params": {
-        },
-        "return": "java.lang.String",
-        "returnDescription": "系统日历部件标识"
-    }
-}

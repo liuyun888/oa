@@ -1,9 +1,0 @@
-{
-    "getDEDataQueryName()" : {
-        "description": "获取数据查询名称",
-        "params": {
-        },
-        "return": "java.lang.String",
-        "returnDescription": "数据查询名称"
-    }
-}

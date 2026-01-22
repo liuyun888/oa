@@ -1,9 +1,0 @@
-{
-    "getDBType()" : {
-        "description": "获取数据库类型",
-        "params": {
-        },
-        "return": "java.lang.String",
-        "returnDescription": "数据库类型"
-    }
-}

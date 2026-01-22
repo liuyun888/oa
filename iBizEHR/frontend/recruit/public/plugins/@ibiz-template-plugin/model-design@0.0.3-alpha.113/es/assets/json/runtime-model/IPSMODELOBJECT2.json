@@ -1,9 +1,0 @@
-{
-    "getPSSysReqItem()" : {
-        "description": "获取系统需求项",
-        "params": {
-        },
-        "return": "net.ibizsys.model.requirement.IPSSysReqItem",
-        "returnDescription": "系统需求项"
-    }
-}
