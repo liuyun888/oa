@@ -1,0 +1,35 @@
+{
+  "actionMode" : "CREATE",
+  "actionType" : "BUILTIN",
+  "getBeforePSDEActionLogics" : [ {
+    "actionLogicType" : 1,
+    "attachMode" : "BEFORE",
+    "codeName" : "Ae28a7f1f5fd3d0d508",
+    "name" : "附加逻辑",
+    "getPSDELogic" : {
+      "modelref" : true,
+      "path" : "PSMODULES/base/PSDATAENTITIES/avatar_mixin/PSDELOGICS/save_avater.json"
+    },
+    "internalLogic" : true
+  } ],
+  "codeName" : "Create",
+  "dataAccessAction" : "CREATE",
+  "dynaModelFilePath" : "PSMODULES/base/PSDATAENTITIES/avatar_mixin/PSDEACTIONS/Create.json",
+  "logicName" : "Create",
+  "name" : "Create",
+  "orderValue" : 1,
+  "getPSDEActionInput" : {
+    "name" : "CreateInput",
+    "getPSDEMethodDTO" : {
+      "modelref" : true,
+      "id" : "avatar_mixin_dto"
+    },
+    "type" : "DTO",
+    "output" : true
+  },
+  "getPSDEActionReturn" : {
+    "name" : "CreateResult",
+    "type" : "VOID"
+  },
+  "builtinAction" : true
+}

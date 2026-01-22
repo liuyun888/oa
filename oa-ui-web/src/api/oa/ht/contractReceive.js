@@ -1,0 +1,31 @@
+import axios from '@/utils/request'
+
+import config from '@/common/config'
+
+let base = config.getOaBasePath();
+
+/**
+ * ht_contract_receive
+ *1    默认只开放普通查询，所有查询，只要上传	 分页参数 {currentPage:当前页码从1开始,pageSize:每页记录数,total:总记录【数如果是0后台会自动计算总记录数非0不会自动计算】}，后台都会自动按分页查询 其它 api用到再打开，没用到的api请注释掉，
+ *2 查询、新增、修改的参数格式  params={id:'id 主键',htId:'合同id',amount:'到款金额',bank:'到款银行',bankAccount:'到款账号',office:'付款单位',receiveType:'对应收款项',receiveAmount:'对应收款金额',matchStatus:'匹配状态',createUserId:'创建用户id',createUserName:'创建用户名称',createTime:'创建用户时间',branchId:'批次机构'}
+ **/
+ 
+//普通查询 条件之间and关系  
+export const listContractReceive = params => { return axios.get(`${base}/oa/ht/contractReceive/list`, { params: params }); };
+
+//模糊查询ht_contract_receive 条件之间or关系  
+//export const listContractReceiveKey = params => { return axios.get(`${base}/oa/ht/contractReceive/listKey`, { params: params }); };
+
+//删除一条ht_contract_receive params={id:'id 主键'}
+export const delContractReceive = params => { return axios.post(`${base}/oa/ht/contractReceive/del`,params); };
+
+//批量删除ht_contract_receive  params=[{id:'id 主键'}]
+export const batchDelContractReceive = params => { return axios.post(`${base}/oa/ht/contractReceive/batchDel`, params); };
+
+//修改一条ht_contract_receive记录
+export const editContractReceive = params => { return axios.post(`${base}/oa/ht/contractReceive/edit`, params); };
+
+//新增一条ht_contract_receive
+export const addContractReceive = params => { return axios.post(`${base}/oa/ht/contractReceive/add`, params); };
+
+export const linkInvoices = params => { return axios.post(`${base}/oa/ht/contractReceive/linkInvoices`, params); };

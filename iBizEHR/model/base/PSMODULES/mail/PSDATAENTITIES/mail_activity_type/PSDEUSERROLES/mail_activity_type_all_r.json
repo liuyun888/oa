@@ -1,0 +1,15 @@
+{
+  "dynaModelFilePath" : "PSMODULES/mail/PSDATAENTITIES/mail_activity_type/PSDEUSERROLES/mail_activity_type_all_r.json",
+  "name" : "mail_activity_type_all_r",
+  "getPSDEUserRoleOPPrivs" : [ {
+    "dataAccessAction" : "READ",
+    "name" : "READ",
+    "getPSDEOPPriv" : {
+      "modelref" : true,
+      "id" : "READ"
+    }
+  } ],
+  "roleTag" : "mail_activity_type_all_r",
+  "userDRAction" : "READ",
+  "allData" : true
+}

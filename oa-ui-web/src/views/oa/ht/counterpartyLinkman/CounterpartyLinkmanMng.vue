@@ -1,0 +1,239 @@
+<template>
+	<section class="page-container border padding">
+		<el-row class="page-header">
+			<el-input v-model="filters.key" style="width: 20%;" placeholder="模糊查询"></el-input> 
+			<el-button type="primary" v-loading="load.list" :disabled="load.list==true" v-on:click="searchCounterpartyLinkmans">查询</el-button>
+			<el-button type="primary" @click="showAdd">+ht_counterparty_linkman</el-button>
+			<el-button type="danger" v-loading="load.del" @click="batchDel" :disabled="this.sels.length===0 || load.del==true">批量删除</el-button> 
+		</el-row>
+		<el-row class="page-main padding-top"> 
+			<!--列表 CounterpartyLinkman ht_counterparty_linkman-->
+			<el-table :data="counterpartyLinkmans" @sort-change="sortChange" highlight-current-row v-loading="load.list" border @selection-change="selsChange" @row-click="rowClick" style="width: 100%;">
+				<el-table-column sortable type="selection" width="40"></el-table-column>
+				<el-table-column sortable type="index" width="40"></el-table-column>
+				<el-table-column prop="linkId" label="联系人id" min-width="80" ></el-table-column>
+				<el-table-column prop="cpId" label="向对方名称" min-width="80" ></el-table-column>
+				<el-table-column prop="linkName" label="联系人名称" min-width="80" ></el-table-column>
+				<el-table-column prop="linkCall" label="联系人称呼" min-width="80" ></el-table-column>
+				<el-table-column prop="linkJob" label="联系人岗位" min-width="80" ></el-table-column>
+				<el-table-column prop="linkDept" label="联系人部门" min-width="80" ></el-table-column>
+				<el-table-column prop="linkPhone" label="联系人办公电话" min-width="80" ></el-table-column>
+				<el-table-column prop="linkEmail" label="联系人邮箱" min-width="80" ></el-table-column>
+				<el-table-column prop="branchId" label="机构编号" min-width="80" ></el-table-column>
+				<el-table-column label="操作" width="180" fixed="right"  >
+					<template slot-scope="scope">
+						<el-button  @click="showEdit( scope.row,scope.$index)">改</el-button>
+						<el-button type="danger" @click="handleDel(scope.row,scope.$index)">删</el-button>
+					</template>
+				</el-table-column>
+			</el-table>
+			<el-pagination  layout="total, sizes, prev, pager, next" @current-change="handleCurrentChange" @size-change="handleSizeChange" :page-sizes="[10,20, 50, 100, 500]" :current-page="pageInfo.pageNum" :page-size="pageInfo.pageSize"  :total="pageInfo.total" style="float:right;"></el-pagination> 
+		
+			<!--编辑 CounterpartyLinkman ht_counterparty_linkman界面-->
+			<el-dialog title="编辑ht_counterparty_linkman" :visible.sync="editFormVisible"  width="50%"  :close-on-click-modal="false">
+				  <counterparty-linkman-edit :counterparty-linkman="editForm" :visible="editFormVisible" @cancel="editFormVisible=false" @submit="afterEditSubmit"></counterparty-linkman-edit>
+			</el-dialog>
+	
+			<!--新增 CounterpartyLinkman ht_counterparty_linkman界面-->
+			<el-dialog title="新增ht_counterparty_linkman" :visible.sync="addFormVisible"  width="50%"  :close-on-click-modal="false">
+				<counterparty-linkman-add :counterparty-linkman="addForm" :visible="addFormVisible" @cancel="addFormVisible=false" @submit="afterAddSubmit"></counterparty-linkman-add>
+			</el-dialog> 
+		</el-row>
+	</section>
+</template>
+
+<script>
+	import util from '@/common/js/util';//全局公共库
+	//import Sticky from '@/components/Sticky' // 粘性header组件
+	//import { listOption } from '@/api/mdp/meta/itemOption';//下拉框数据查询
+	import { listCounterpartyLinkman, delCounterpartyLinkman, batchDelCounterpartyLinkman } from '@/api/oa/ht/counterpartyLinkman';
+	import  CounterpartyLinkmanAdd from './CounterpartyLinkmanAdd';//新增界面
+	import  CounterpartyLinkmanEdit from './CounterpartyLinkmanEdit';//修改界面
+	import { mapGetters } from 'vuex'
+	
+	export default { 
+		computed: {
+		    ...mapGetters([
+		      'userInfo'
+		    ])
+		},
+		data() {
+			return {
+				filters: {
+					key: ''
+				},
+				counterpartyLinkmans: [],//查询结果
+				pageInfo:{//分页数据
+					total:0,//服务器端收到0时，会自动计算总记录数，如果上传>0的不自动计算。
+					pageSize:10,//每页数据
+					count:false,//是否需要重新计算总记录数
+					pageNum:1,//当前页码、从1开始计算
+					orderFields:[],//排序列 如 ['sex','student_id']，必须为数据库字段
+					orderDirs:[]//升序 asc,降序desc 如 性别 升序、学生编号降序 ['asc','desc']
+				},
+				load:{ list: false, edit: false, del: false, add: false },//查询中...
+				sels: [],//列表选中数据
+				options:{},//下拉选择框的所有静态数据 params=[{categoryId:'0001',itemCode:'sex'}] 返回结果 {'sex':[{optionValue:'1',optionName:'男',seqOrder:'1',fp:'',isDefault:'0'},{optionValue:'2',optionName:'女',seqOrder:'2',fp:'',isDefault:'0'}]} 
+				
+				addFormVisible: false,//新增counterpartyLinkman界面是否显示
+				//新增counterpartyLinkman界面初始化数据
+				addForm: {
+					linkId:'',cpId:'',linkName:'',linkCall:'',linkJob:'',linkDept:'',linkPhone:'',linkEmail:'',branchId:''
+				},
+				
+				editFormVisible: false,//编辑界面是否显示
+				//编辑counterpartyLinkman界面初始化数据
+				editForm: {
+					linkId:'',cpId:'',linkName:'',linkCall:'',linkJob:'',linkDept:'',linkPhone:'',linkEmail:'',branchId:''
+				}
+				/**begin 自定义属性请在下面加 请加备注**/
+					
+				/**end 自定义属性请在上面加 请加备注**/
+			}
+		},//end data
+		methods: { 
+			handleSizeChange(pageSize) { 
+				this.pageInfo.pageSize=pageSize; 
+				this.getCounterpartyLinkmans();
+			},
+			handleCurrentChange(pageNum) {
+				this.pageInfo.pageNum = pageNum;
+				this.getCounterpartyLinkmans();
+			},
+			// 表格排序 obj.order=ascending/descending,需转化为 asc/desc ; obj.prop=表格中的排序字段,字段驼峰命名
+			sortChange( obj ){
+				var dir='asc';
+				if(obj.order=='ascending'){
+					dir='asc'
+				}else{
+					dir='desc';
+				}
+				if(obj.prop=='xxx'){
+					this.pageInfo.orderFields=['xxx'];
+					this.pageInfo.orderDirs=[dir];
+				}
+				this.getCounterpartyLinkmans();
+			},
+			searchCounterpartyLinkmans(){
+				 this.pageInfo.count=true; 
+				 this.getCounterpartyLinkmans();
+			},
+			//获取列表 CounterpartyLinkman ht_counterparty_linkman
+			getCounterpartyLinkmans() {
+				let params = {
+					pageSize: this.pageInfo.pageSize,
+					pageNum: this.pageInfo.pageNum,
+					total: this.pageInfo.total,
+					count:this.pageInfo.count
+				};
+				if(this.pageInfo.orderFields!=null && this.pageInfo.orderFields.length>0){
+					let orderBys=[];
+					for(var i=0;i<this.pageInfo.orderFields.length;i++){ 
+						orderBys.push(this.pageInfo.orderFields[i]+" "+this.pageInfo.orderDirs[i])
+					}  
+					params.orderBy= orderBys.join(",")
+				}
+				if(this.filters.key!==""){
+					//params.xxx=this.filters.key
+				}else{
+					//params.xxx=xxxxx
+				}
+				this.load.list = true;
+				listCounterpartyLinkman(params).then((res) => {
+					var tips=res.data.tips;
+					if(tips.isOk){ 
+						this.pageInfo.total = res.data.total;
+						this.pageInfo.count=false;
+						this.counterpartyLinkmans = res.data.data;
+					}else{
+						this.$message({ message: tips.msg, type: 'error' });
+					} 
+					this.load.list = false;
+				}).catch( err => this.load.list = false );
+			},
+
+			//显示编辑界面 CounterpartyLinkman ht_counterparty_linkman
+			showEdit: function ( row,index ) {
+				this.editFormVisible = true;
+				this.editForm = Object.assign({}, row);
+			},
+			//显示新增界面 CounterpartyLinkman ht_counterparty_linkman
+			showAdd: function () {
+				this.addFormVisible = true;
+				//this.addForm=Object.assign({}, this.editForm);
+			},
+			afterAddSubmit(){
+				this.addFormVisible=false;
+				this.pageInfo.count=true;
+				this.getCounterpartyLinkmans();
+			},
+			afterEditSubmit(){
+				this.editFormVisible=false;
+			},
+			//选择行counterpartyLinkman
+			selsChange: function (sels) {
+				this.sels = sels;
+			}, 
+			//删除counterpartyLinkman
+			handleDel: function (row,index) { 
+				this.$confirm('确认删除该记录吗?', '提示', {
+					type: 'warning'
+				}).then(() => { 
+					this.load.del=true;
+					let params = { linkId: row.linkId };
+					delCounterpartyLinkman(params).then((res) => {
+						this.load.del=false;
+						var tips=res.data.tips;
+						if(tips.isOk){ 
+							this.pageInfo.count=true;
+							this.getCounterpartyLinkmans();
+						}
+						this.$message({ message: tips.msg, type: tips.isOk?'success':'error' }); 
+					}).catch( err  => this.load.del=false );
+				});
+			},
+			//批量删除counterpartyLinkman
+			batchDel: function () {
+				
+				this.$confirm('确认删除选中记录吗？', '提示', {
+					type: 'warning'
+				}).then(() => { 
+					this.load.del=true;
+					batchDelCounterpartyLinkman(this.sels).then((res) => {
+						this.load.del=false;
+						var tips=res.data.tips;
+						if( tips.isOk ){ 
+							this.pageInfo.count=true;
+							this.getCounterpartyLinkmans(); 
+						}
+						this.$message({ message: tips.msg, type: tips.isOk?'success':'error'});
+					}).catch( err  => this.load.del=false );
+				});
+			},
+			rowClick: function(row, event, column){
+				this.$emit('row-click',row, event, column);//  @row-click="rowClick"
+			}
+			/**begin 自定义函数请在下面加**/
+			
+				
+			/**end 自定义函数请在上面加**/
+			
+		},//end methods
+		components: { 
+		    'counterparty-linkman-add':CounterpartyLinkmanAdd,
+		    'counterparty-linkman-edit':CounterpartyLinkmanEdit,
+		    
+		    //在下面添加其它组件
+		},
+		mounted() { 
+			this.$nextTick(() => {
+				this.getCounterpartyLinkmans();
+        	}); 
+		}
+	}
+
+</script>
+
+<style scoped>
+
+</style>

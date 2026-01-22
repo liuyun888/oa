@@ -1,0 +1,15 @@
+{
+  "dynaModelFilePath" : "PSMODULES/hr/PSDATAENTITIES/hr_employee/PSDEUSERROLES/employee_all_r.json",
+  "name" : "employee_all_r",
+  "getPSDEUserRoleOPPrivs" : [ {
+    "dataAccessAction" : "READ",
+    "name" : "READ",
+    "getPSDEOPPriv" : {
+      "modelref" : true,
+      "id" : "READ"
+    }
+  } ],
+  "roleTag" : "employee_all_r",
+  "userDRAction" : "READ",
+  "allData" : true
+}

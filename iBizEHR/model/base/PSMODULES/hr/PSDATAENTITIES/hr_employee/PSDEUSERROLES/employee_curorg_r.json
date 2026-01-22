@@ -1,0 +1,15 @@
+{
+  "customCond" : "[('company_id','=',#{ctx.sessioncontext.srforgid})]",
+  "dynaModelFilePath" : "PSMODULES/hr/PSDATAENTITIES/hr_employee/PSDEUSERROLES/employee_curorg_r.json",
+  "name" : "employee_curorg_r",
+  "getPSDEUserRoleOPPrivs" : [ {
+    "dataAccessAction" : "READ",
+    "name" : "READ",
+    "getPSDEOPPriv" : {
+      "modelref" : true,
+      "id" : "READ"
+    }
+  } ],
+  "roleTag" : "employee_curorg_r",
+  "userDRAction" : "READ"
+}

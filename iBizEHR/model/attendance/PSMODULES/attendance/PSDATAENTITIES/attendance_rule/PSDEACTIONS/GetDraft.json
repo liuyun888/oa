@@ -1,0 +1,68 @@
+{
+  "actionMode" : "GETDRAFT",
+  "actionType" : "BUILTIN",
+  "getAfterPSDEActionLogics" : [ {
+    "actionLogicType" : 1,
+    "attachMode" : "AFTER",
+    "codeName" : "A21e1f0fa03d9ebd5a4",
+    "name" : "附加逻辑",
+    "getPSDELogic" : {
+      "modelref" : true,
+      "path" : "PSMODULES/attendance/PSDATAENTITIES/attendance_rule/PSDELOGICS/fillShift.json"
+    },
+    "internalLogic" : true
+  }, {
+    "actionLogicType" : 1,
+    "attachMode" : "AFTER",
+    "codeName" : "A23f3769bc1b7bb9b1f",
+    "name" : "附加逻辑",
+    "getPSDELogic" : {
+      "modelref" : true,
+      "path" : "PSMODULES/attendance/PSDATAENTITIES/attendance_rule/PSDELOGICS/fillWorkDays.json"
+    },
+    "internalLogic" : true
+  }, {
+    "actionLogicType" : 1,
+    "attachMode" : "AFTER",
+    "codeName" : "A5b7cb516909beeb6db",
+    "name" : "附加逻辑",
+    "getPSDELogic" : {
+      "modelref" : true,
+      "path" : "PSMODULES/attendance/PSDATAENTITIES/attendance_rule/PSDELOGICS/fillGroupShift.json"
+    },
+    "internalLogic" : true
+  }, {
+    "actionLogicType" : 1,
+    "attachMode" : "AFTER",
+    "codeName" : "Ada9a8c8ca747e2304c",
+    "name" : "附加逻辑",
+    "getPSDELogic" : {
+      "modelref" : true,
+      "path" : "PSMODULES/attendance/PSDATAENTITIES/attendance_rule/PSDELOGICS/calcOther.json"
+    },
+    "internalLogic" : true
+  } ],
+  "codeName" : "GetDraft",
+  "dataAccessAction" : "CREATE",
+  "dynaModelFilePath" : "PSMODULES/attendance/PSDATAENTITIES/attendance_rule/PSDEACTIONS/GetDraft.json",
+  "logicName" : "GetDraft",
+  "name" : "GetDraft",
+  "orderValue" : 41,
+  "getPSDEActionInput" : {
+    "name" : "GetDraftInput",
+    "getPSDEMethodDTO" : {
+      "modelref" : true,
+      "id" : "attendance_rule_dto"
+    },
+    "type" : "DTO"
+  },
+  "getPSDEActionReturn" : {
+    "name" : "GetDraftResult",
+    "getPSDEMethodDTO" : {
+      "modelref" : true,
+      "id" : "attendance_rule_dto"
+    },
+    "type" : "DTO"
+  },
+  "builtinAction" : true
+}

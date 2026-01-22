@@ -1,0 +1,15 @@
+{
+  "dynaModelFilePath" : "PSMODULES/base/PSDATAENTITIES/ir_attachment/PSDEUSERROLES/ir_attachment_all_r.json",
+  "name" : "ir_attachment_all_r",
+  "getPSDEUserRoleOPPrivs" : [ {
+    "dataAccessAction" : "READ",
+    "name" : "READ",
+    "getPSDEOPPriv" : {
+      "modelref" : true,
+      "id" : "READ"
+    }
+  } ],
+  "roleTag" : "ir_attachment_all_r",
+  "userDRAction" : "READ",
+  "allData" : true
+}

@@ -1,0 +1,36 @@
+{
+  "customCond" : "[('create_uid','=',#{ctx.sessioncontext.srfpersonid}})]",
+  "dynaModelFilePath" : "PSMODULES/mail/PSDATAENTITIES/mail_activity/PSDEUSERROLES/mail_activity_curuser_rw.json",
+  "name" : "mail_activity_curuser_rw",
+  "getPSDEUserRoleOPPrivs" : [ {
+    "dataAccessAction" : "READ",
+    "name" : "READ",
+    "getPSDEOPPriv" : {
+      "modelref" : true,
+      "id" : "READ"
+    }
+  }, {
+    "dataAccessAction" : "CREATE",
+    "name" : "CREATE",
+    "getPSDEOPPriv" : {
+      "modelref" : true,
+      "id" : "CREATE"
+    }
+  }, {
+    "dataAccessAction" : "DELETE",
+    "name" : "DELETE",
+    "getPSDEOPPriv" : {
+      "modelref" : true,
+      "id" : "DELETE"
+    }
+  }, {
+    "dataAccessAction" : "UPDATE",
+    "name" : "UPDATE",
+    "getPSDEOPPriv" : {
+      "modelref" : true,
+      "id" : "UPDATE"
+    }
+  } ],
+  "roleTag" : "mail_activity_curuser_rw",
+  "userDRAction" : "READ"
+}

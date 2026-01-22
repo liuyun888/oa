@@ -1,0 +1,32 @@
+{
+  "codeName" : "work_location",
+  "dERType" : "DER1N",
+  "dynaModelFilePath" : "PSMODULES/hr/PSDATAENTITIES/hr_job/PSDERS/DER1N_HR_JOB_HR_WORK_LOCATION_WORK_LOCATION_ID.json",
+  "fKeyName" : "FCD2F965ED4405B10E",
+  "logicName" : "工作地点",
+  "getMajorPSDataEntity" : {
+    "modelref" : true,
+    "path" : "PSMODULES/hr/PSDATAENTITIES/hr_work_location.json"
+  },
+  "masterOrder" : -1,
+  "masterRS" : 0,
+  "getMinorPSDataEntity" : {
+    "modelref" : true,
+    "path" : "PSMODULES/hr/PSDATAENTITIES/hr_job.json"
+  },
+  "name" : "DER1N_HR_JOB_HR_WORK_LOCATION_WORK_LOCATION_ID",
+  "orderValue" : 100,
+  "getPSPickupDEField" : {
+    "name" : "WORK_LOCATION_ID",
+    "codeName" : "work_Location_id"
+  },
+  "getPSPickupTextDEField" : {
+    "name" : "WORK_LOCATION_NAME",
+    "codeName" : "work_Location_name"
+  },
+  "pickupDEFName" : "WORK_LOCATION_ID",
+  "removeActionType" : -1,
+  "removeOrder" : 0,
+  "serviceCodeName" : "work_location",
+  "enableFKey" : true
+}

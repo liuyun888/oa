@@ -1,0 +1,46 @@
+package cn.ibizlab.base.logic.res_userslogic.getinfo;
+        import java.util.Map;
+        import java.util.HashMap;
+        import com.alibaba.fastjson.JSONObject;
+        import org.springframework.util.StringUtils;
+        import org.springframework.util.ObjectUtils;
+        import cn.ibizlab.util.errors.BadRequestAlertException;
+                global cn.ibizlab.core.base.domain.res_users res_usersgetinfodefault;
+                    global cn.ibizlab.core.base.service.Ires_usersService res_usersservice;
+        global cn.ibizlab.core.base.service.Ires_usersService iBzSysRes_usersDefaultService;
+        global cn.ibizlab.util.security.AuthenticationUser curuser;
+
+
+    no-loop
+
+            //逻辑处理节点[开始]
+            rule "begin"
+            ruleflow-group "res_usersgetinfobegin"
+            when
+            then
+            end
+
+            //逻辑处理节点[获取详细信息]
+            rule "deaction_01"
+            ruleflow-group "res_usersgetinfodeaction_01"
+            when
+            then
+                            cn.ibizlab.util.helper.CachedBeanCopier.copy(res_usersservice.get(res_usersgetinfodefault.getId()),res_usersgetinfodefault);
+                        update(res_usersgetinfodefault);//更新fact中变量值
+            end
+
+            //逻辑处理节点[置空密码属性]
+            rule "prepareparam_01"
+            ruleflow-group "res_usersgetinfoprepareparam_01"
+            when
+            then
+                        update(res_usersgetinfodefault);//更新fact中变量值
+            end
+
+            //逻辑处理节点[结束]
+            rule "end_01"
+            ruleflow-group "res_usersgetinfoend_01"
+            when
+            then
+                        update(res_usersgetinfodefault);//更新fact中变量值
+            end

@@ -1,0 +1,156 @@
+<template>
+	<section>
+		 <el-row class="page-container border padding"> 
+			<el-form :model="editForm"  label-width="120px" :rules="editFormRules" ref="editForm">
+				<el-form-item label="申请用车开始时间" prop="reqStartTime">
+					<el-date-picker type="date" placeholder="选择日期" v-model="editForm.reqStartTime"  value-format="yyyy-MM-dd HH:mm:ss" format="yyyy-MM-dd"></el-date-picker>
+				</el-form-item> 
+				<el-form-item label="申请用车结束时间" prop="reqEndTime">
+					<el-date-picker type="date" placeholder="选择日期" v-model="editForm.reqEndTime"  value-format="yyyy-MM-dd HH:mm:ss" format="yyyy-MM-dd"></el-date-picker>
+				</el-form-item> 
+				<el-form-item label="申请编号" prop="id">
+					<el-input v-model="editForm.id" placeholder="申请编号"></el-input>
+				</el-form-item> 
+				<el-form-item label="申请部门编号" prop="reqDeptid">
+					<el-input v-model="editForm.reqDeptid" placeholder="申请部门编号"></el-input>
+				</el-form-item> 
+				<el-form-item label="申请部门名称" prop="reqDeptName">
+					<el-input v-model="editForm.reqDeptName" placeholder="申请部门名称"></el-input>
+				</el-form-item> 
+				<el-form-item label="申请机构号" prop="reqBranchId">
+					<el-input v-model="editForm.reqBranchId" placeholder="申请机构号"></el-input>
+				</el-form-item> 
+				<el-form-item label="申请人编号" prop="reqUserid">
+					<el-input v-model="editForm.reqUserid" placeholder="申请人编号"></el-input>
+				</el-form-item> 
+				<el-form-item label="申请人姓名" prop="reqUsername">
+					<el-input v-model="editForm.reqUsername" placeholder="申请人姓名"></el-input>
+				</el-form-item> 
+				<el-form-item label="申请人电话" prop="reqPhoneno">
+					<el-input v-model="editForm.reqPhoneno" placeholder="申请人电话"></el-input>
+				</el-form-item> 
+				<el-form-item label="申请事由" prop="reqReason">
+					<el-input v-model="editForm.reqReason" placeholder="申请事由"></el-input>
+				</el-form-item> 
+				<el-form-item label="申请时间" prop="reqTime">
+					<el-date-picker type="date" placeholder="选择日期" v-model="editForm.reqTime"  value-format="yyyy-MM-dd HH:mm:ss" format="yyyy-MM-dd"></el-date-picker>
+				</el-form-item> 
+				<el-form-item label="申请状态" prop="reqStatus">
+					<el-input v-model="editForm.reqStatus" placeholder="申请状态"></el-input>
+				</el-form-item> 
+				<el-form-item label="审批状态" prop="bizFlowState">
+					<el-input v-model="editForm.bizFlowState" placeholder="审批状态"></el-input>
+				</el-form-item> 
+				<el-form-item label="流程实例编号" prop="bizProcInstId">
+					<el-input v-model="editForm.bizProcInstId" placeholder="流程实例编号"></el-input>
+				</el-form-item> 
+				<el-form-item label="目的地地址" prop="destAddress">
+					<el-input v-model="editForm.destAddress" placeholder="目的地地址"></el-input>
+				</el-form-item> 
+				<el-form-item label="目的地定位" prop="destGps">
+					<el-input v-model="editForm.destGps" placeholder="目的地定位"></el-input>
+				</el-form-item> 
+				<el-form-item label="申请标题" prop="reqTitle">
+					<el-input v-model="editForm.reqTitle" placeholder="申请标题"></el-input>
+				</el-form-item> 
+				<el-form-item label="是否规划路线" prop="hasRoute">
+					<el-input v-model="editForm.hasRoute" placeholder="是否规划路线"></el-input>
+				</el-form-item> 
+				<el-form-item label="机构名称" prop="reqBranchName">
+					<el-input v-model="editForm.reqBranchName" placeholder="机构名称"></el-input>
+				</el-form-item> 
+				<el-form-item> 
+					<el-col :span="24" :offset="8"> 
+						<el-button @click.native="handleCancel">取消</el-button>  
+						<el-button v-loading="load.edit" type="primary" @click.native="editSubmit" :disabled="load.edit==true">提交</el-button>  
+					</el-col> 
+				</el-form-item> 
+			</el-form>
+		</el-row>
+	</section>
+</template>
+
+<script>
+	import util from '@/common/js/util';//全局公共库
+	//import { listOption } from '@/api/mdp/meta/itemOption';//下拉框数据查询
+	import { editCarRequire } from '@/api/oa/car/carRequire';
+	import { mapGetters } from 'vuex'
+	
+	export default { 
+		computed: {
+		    ...mapGetters([
+		      'userInfo'
+		    ])
+		},
+		props:['carRequire','visible'],
+		watch: {
+	      'carRequire':function( carRequire ) {
+	        this.editForm = carRequire;
+	      },
+	      'visible':function(visible) { 
+	      	if(visible==true){
+	      		//从新打开页面时某些数据需要重新加载，可以在这里添加
+	      	}
+	      } 
+	    },
+		data() {
+			return {
+				options:{},//下拉选择框的所有静态数据 params=[{categoryId:'0001',itemCode:'sex'}] 返回结果 {'sex':[{optionValue:'1',optionName:'男',seqOrder:'1',fp:'',isDefault:'0'},{optionValue:'2',optionName:'女',seqOrder:'2',fp:'',isDefault:'0'}]} 
+				load:{ list: false, edit: false, del: false, add: false },//查询中...
+				editFormRules: {
+					id: [
+						//{ required: true, message: '申请编号不能为空', trigger: 'change' }
+					]
+				},
+				//编辑界面数据  CarRequire car_require
+				editForm: {
+					reqStartTime:'',reqEndTime:'',id:'',reqDeptid:'',reqDeptName:'',reqBranchId:'',reqUserid:'',reqUsername:'',reqPhoneno:'',reqReason:'',reqTime:'',reqStatus:'',bizFlowState:'',bizProcInstId:'',destAddress:'',destGps:'',reqTitle:'',hasRoute:'',reqBranchName:''
+				}
+				/**begin 在下面加自定义属性,记得补上面的一个逗号**/
+				
+				/**end 在上面加自定义属性**/
+			}//end return
+		},//end data
+		methods: {
+			// 取消按钮点击 父组件监听@cancel="editFormVisible=false" 监听
+			handleCancel:function(){
+				this.$refs['editForm'].resetFields();
+				this.$emit('cancel');
+			},
+			//编辑提交CarRequire car_require父组件监听@submit="afterEditSubmit"
+			editSubmit: function () {
+				this.$refs.editForm.validate((valid) => {
+					if (valid) {
+						this.$confirm('确认提交吗？', '提示', {}).then(() => { 
+							this.load.edit=true
+							let params = Object.assign({}, this.editForm); 
+							editCarRequire(params).then((res) => {
+								this.load.edit=false
+								var tips=res.data.tips;
+								if(tips.isOk){
+									this.$refs['editForm'].resetFields();
+									this.$emit('submit');//  @submit="afterEditSubmit"
+								}
+								this.$message({ message: tips.msg, type: tips.isOk?'success':'error' }); 
+							}).catch( err =>this.load.edit=false);
+						});
+					}
+				});
+			}
+			/**begin 在下面加自定义方法,记得补上面的一个逗号**/
+				
+			/**end 在上面加自定义方法**/
+		},//end method
+		components: {  
+		    //在下面添加其它组件 'car-require-edit':CarRequireEdit
+		},
+		mounted() {
+			this.editForm=Object.assign(this.editForm, this.carRequire);  
+		}
+	}
+
+</script>
+
+<style scoped>
+
+</style>

@@ -1,0 +1,125 @@
+<template>
+	<section>
+		 <el-row class="page-container border padding"> 
+			<el-form :model="addForm"  label-width="120px" :rules="addFormRules" ref="addForm">
+				<el-form-item label="主键" prop="id">
+					<el-input v-model="addForm.id" placeholder="主键" ></el-input>
+				</el-form-item> 
+				<el-form-item label="会议id" prop="meetingId">
+					<el-input v-model="addForm.meetingId" placeholder="会议id" ></el-input>
+				</el-form-item> 
+				<el-form-item label="用户id" prop="userId">
+					<el-input v-model="addForm.userId" placeholder="用户id" ></el-input>
+				</el-form-item> 
+				<el-form-item label="用户" prop="username">
+					<el-input v-model="addForm.username" placeholder="用户" ></el-input>
+				</el-form-item> 
+				<el-form-item label="用户头像" prop="headerImage">
+					<el-input v-model="addForm.headerImage" placeholder="用户头像" ></el-input>
+				</el-form-item> 
+				<el-form-item label="创建时间" prop="createTime">
+					<el-date-picker type="date" placeholder="选择日期" v-model="addForm.createTime" value-format="yyyy-MM-dd HH:mm:ss" format="yyyy-MM-dd"></el-date-picker>
+				</el-form-item> 
+				<el-form-item label="内容" prop="content">
+					<el-input v-model="addForm.content" placeholder="内容" ></el-input>
+				</el-form-item> 
+				<el-form-item>
+					<el-col :span="24" :offset="8"> 
+						<el-button @click.native="handleCancel">取消</el-button>  
+						<el-button v-loading="load.add" type="primary" @click.native="addSubmit" :disabled="load.add==true">提交</el-button>  
+					</el-col>
+				</el-form-item> 
+			</el-form>
+		</el-row>
+	</section>
+</template>
+
+<script>
+	import util from '@/common/js/util';//全局公共库
+	//import { listOption } from '@/api/mdp/meta/itemOption';//下拉框数据查询 
+	import { addMeetMeetingRecord } from '@/api/oa/meet/meetMeetingRecord';
+	import { mapGetters } from 'vuex'
+	
+	export default { 
+		computed: {
+		    ...mapGetters([
+		      'userInfo'
+		    ])
+		},
+		props:['meetMeetingRecord','visible'],
+		watch: {
+	      'meetMeetingRecord':function( meetMeetingRecord ) {
+	        this.addForm = meetMeetingRecord;
+	      },
+	      'visible':function(visible) { 
+	      	if(visible==true){
+	      		//从新打开页面时某些数据需要重新加载，可以在这里添加
+	      	}
+	      } 
+	    },
+		data() {
+			return {
+				options:{},//下拉选择框的所有静态数据  params=[{categoryId:'0001',itemCode:'sex'}] 返回结果 {'sex':[{optionValue:'1',optionName:'男',seqOrder:'1',fp:'',isDefault:'0'},{optionValue:'2',optionName:'女',seqOrder:'2',fp:'',isDefault:'0'}]} 
+				load:{ list: false, edit: false, del: false, add: false },//查询中...
+				addFormRules: {
+					id: [
+						//{ required: true, message: '主键不能为空', trigger: 'change' }
+					]
+				},
+				//新增界面数据 meet_meeting_record
+				addForm: {
+					id:'',meetingId:'',userId:'',username:'',headerImage:'',createTime:'',content:''
+				}
+				/**begin 在下面加自定义属性,记得补上面的一个逗号**/
+				
+				/**end 在上面加自定义属性**/
+			}//end return
+		},//end data
+		methods: {
+			// 取消按钮点击 父组件监听@cancel="addFormVisible=false" 监听
+			handleCancel:function(){
+				this.$refs['addForm'].resetFields();
+				this.$emit('cancel');
+			},
+			//新增提交MeetMeetingRecord meet_meeting_record 父组件监听@submit="afterAddSubmit"
+			addSubmit: function () {
+				
+				this.$refs.addForm.validate((valid) => {
+					if (valid) {
+						
+						this.$confirm('确认提交吗？', '提示', {}).then(() => { 
+							this.load.add=true
+							let params = Object.assign({}, this.addForm); 
+							addMeetMeetingRecord(params).then((res) => {
+								this.load.add=false
+								var tips=res.data.tips;
+								if(tips.isOk){
+									this.$refs['addForm'].resetFields();
+									this.$emit('submit');//  @submit="afterAddSubmit"
+								}
+								this.$message({ message: tips.msg, type: tips.isOk?'success':'error' }); 
+							}).catch( err  => this.load.add=false);
+						});
+					}
+				});
+			}
+			/**begin 在下面加自定义方法,记得补上面的一个逗号**/
+				
+			/**end 在上面加自定义方法**/
+			
+		},//end method
+		components: {  
+		    //在下面添加其它组件 'meet-meeting-record-edit':MeetMeetingRecordEdit
+		},
+		mounted() {
+			this.addForm=Object.assign(this.addForm, this.meetMeetingRecord);  
+			/**在下面写其它函数***/
+			
+		}//end mounted
+	}
+
+</script>
+
+<style scoped>
+
+</style>

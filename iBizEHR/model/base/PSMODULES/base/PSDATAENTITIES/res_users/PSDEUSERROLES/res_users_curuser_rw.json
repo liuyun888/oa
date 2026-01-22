@@ -1,0 +1,22 @@
+{
+  "customCond" : "[('id','=',#{ctx.sessioncontext.srfpersonid})]",
+  "dynaModelFilePath" : "PSMODULES/base/PSDATAENTITIES/res_users/PSDEUSERROLES/res_users_curuser_rw.json",
+  "name" : "res_users_curuser_rw",
+  "getPSDEUserRoleOPPrivs" : [ {
+    "dataAccessAction" : "UPDATE",
+    "name" : "UPDATE",
+    "getPSDEOPPriv" : {
+      "modelref" : true,
+      "id" : "UPDATE"
+    }
+  }, {
+    "dataAccessAction" : "READ",
+    "name" : "READ",
+    "getPSDEOPPriv" : {
+      "modelref" : true,
+      "id" : "READ"
+    }
+  } ],
+  "roleTag" : "res_users_curuser_rw",
+  "userDRAction" : "READ"
+}

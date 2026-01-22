@@ -1,0 +1,15 @@
+{
+  "dynaModelFilePath" : "PSMODULES/resource/PSDATAENTITIES/resource_calendar/PSDEUSERROLES/resource_calendar_all_r.json",
+  "name" : "resource_calendar_all_r",
+  "getPSDEUserRoleOPPrivs" : [ {
+    "dataAccessAction" : "READ",
+    "name" : "READ",
+    "getPSDEOPPriv" : {
+      "modelref" : true,
+      "id" : "READ"
+    }
+  } ],
+  "roleTag" : "resource_calendar_all_r",
+  "userDRAction" : "READ",
+  "allData" : true
+}
